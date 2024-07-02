@@ -1,0 +1,6 @@
+api:
+  id: "1234"
+  listener:
+   path: "/*"
+  appName: ${artifactId}
+  appVersion: ${version}
