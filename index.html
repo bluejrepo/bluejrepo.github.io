@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>reCAPTCHA v3 Test</title>
-    <script src="https://www.google.com/recaptcha/api.js?render=6Lcu2AMqAAAAAFBijhyKBVzza3dTDEJQ7Y6hHxuq"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdQPQoqAAAAAPfXdTcPlpeF8cyOaIUw7PVRMmTd"></script>
 </head>
 <body>
+
+<div id="captchaRequest">
     <h1>reCAPTCHA v3 Test Form</h1>
     <form id="testForm">
         <label for="name">Name:</label>
@@ -21,31 +23,34 @@
             event.preventDefault();
 
             grecaptcha.ready(function() {
-                grecaptcha.execute('6Lcu2AMqAAAAAFBijhyKBVzza3dTDEJQ7Y6hHxuq', {action: 'submit'}).then(function(token) {
-                    // Prepare the form data
-                    var formData = new FormData(document.getElementById('testForm'));
-
-                    // Create an XMLHttpRequest object
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', 'https://bluejrepo.github.io', true);
-
-                    // Set the reCAPTCHA token in the headers
-                    xhr.setRequestHeader('X-Recaptcha-Token', token);
-
-                    // Define what to do when the response is received
-                    xhr.onload = function () {
-                        if (xhr.status >= 200 && xhr.status < 300) {
-                            alert('Form submitted successfully!');
-                        } else {
-                            alert('Error submitting form.');
-                        }
-                    };
-
-                    // Send the form data
-                    xhr.send(formData);
+                grecaptcha.execute('6LdQPQoqAAAAAPfXdTcPlpeF8cyOaIUw7PVRMmTd', {action: 'submit'}).then(function(token) {
+                    document.getElementById('graphQL').style.display = 'block';
+                    document.getElementById('XReCaptchaToken').innerHTML = token
+                    document.getElementById('captchaRequest').style.display = 'none';
+                    
                 });
             });
         });
     </script>
+</div>
+
+
+<br></br>
+<script>
+	function postGraphQL(event) {
+    	event.preventDefault();
+        let captcha = event.target.'X-ReCaptcha-Token'.value;
+		alert(captcha);
+		return true;
+	}
+	
+	//onsubmit="return postGraphQL(event);"
+</script>
+<div id="graphQL" style="display: none">
+    <h1>X-ReCaptcha-Token Response</h1>
+		<label for="X-ReCaptcha-Token">X-ReCaptcha-Token:</label>
+		<textarea id="XReCaptchaToken" name="XReCaptchaToken" rows="5" cols="80"></textarea><br></br>
+</div>
+
 </body>
 </html>
